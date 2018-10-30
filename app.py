@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 
 app = Flask(__name__)
@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Templates
 @app.route("/")
 def home():
-    return 'HELLO man, how you doing, are you going to find darwins shit?'
+    return render_template('index.html')
 
 
 # Templates
