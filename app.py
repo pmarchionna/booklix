@@ -6,7 +6,7 @@ app = Flask(__name__)
 # Templates
 @app.route("/")
 def home():
-    return 'HELLO'
+    return 'HELLO man, how you doing, are you going to find darwins shit?'
 
 
 # Templates
