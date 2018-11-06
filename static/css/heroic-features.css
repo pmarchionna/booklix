@@ -17,3 +17,15 @@ body {
 .card {
   height: 100%;
 }
+
+.book-image{
+  height:400px;
+}
+
+.book-page{
+  text-align: center;
+}
+
+.book-header{
+  margin: 60px;
+}
