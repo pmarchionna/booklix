@@ -5,6 +5,8 @@
 
     <p>First Name: {{ user["first_name"] }}</p>
     <p>Last Name: {{ user["last_name"] }}</p>
+    <a href="{{'/book/' + user['currentBook']}}"> <p>Borrowed Book: {{borrowedBook['title'] }}</p></a>
+    <p>Uploaded Books: {{ user["given"] }}</p>
 
 </body>
 
