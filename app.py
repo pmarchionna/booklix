@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from  MySQLdb import connect, cursors
+import os
 
 all_my_books = {
     'book1': {
@@ -62,8 +63,8 @@ def book(book_id):
 
 @app.route("/books")
 def books():
-    connection = connect(host='localhost', user='root', passwd='',
-            db='booklix', cursorclass=cursors.DictCursor)
+    connection = connect(host=os.getenv('DB_HOST'), user=os.getenv('DB_USER'), passwd=os.getenv('DB_PASSWORD'),
+                         db=os.getenv('DB_NAME'), cursorclass=cursors.DictCursor)
     cursor = connection.cursor()
     cursor.execute("SELECT id, title, description, imageUrl FROM books")
     books = cursor.fetchall()
@@ -72,8 +73,8 @@ def books():
 
 @app.route("/users/<userId>")
 def users(userId):
-    connection = connect(host='localhost', user='root', passwd='',
-                         db='booklix', cursorclass=cursors.DictCursor)
+    connection = connect(host=os.getenv('DB_HOST'), user=os.getenv('DB_USER'), passwd=os.getenv('DB_PASSWORD'),
+                         db=os.getenv('DB_NAME'), cursorclass=cursors.DictCursor)
     cursor = connection.cursor()
     cursor.execute("SELECT id, name, surname, profilePic FROM users where ID = %s;",(userId,))
     user = cursor.fetchone()
