@@ -70,21 +70,23 @@ def books():
     connection.close()
     return render_template('books.html', books=books)
 
+@app.route("/users/<userId>")
+def users(userId):
+    connection = connect(host='localhost', user='root', passwd='',
+                         db='booklix', cursorclass=cursors.DictCursor)
+    cursor = connection.cursor()
+    cursor.execute("SELECT id, name, surname, profilePic FROM users where ID = %s;",(userId,))
+    user = cursor.fetchone()
+    connection.close()
+    return render_template('user.html', user=user, books=books)
+
+
+
 
 # Templates
 @app.route("/status")
 def status():
     return 'HAPPY'
-
-
-@app.route("/user/<user_ID>")
-def user(user_ID):
-    user = all_my_users[user_ID]
-    borrowedBookId = user['currentBook']
-    borrowedBook = all_my_books[borrowedBookId]
-
-    return render_template('user.html', user=user, borrowedBook=borrowedBook)
-
 
 if __name__ == "__main__":
     app.run()
