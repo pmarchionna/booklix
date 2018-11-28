@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from  MySQLdb import connect, cursors
 import os
+import uuid
 
 all_my_books = {
     'book1': {
@@ -82,6 +83,23 @@ def users(userId):
     return render_template('user.html', user=user, books=books)
 
 
+@app.route("/register", methods=['GET','POST'])
+def register():
+    if request.method == 'POST':
+        userId = uuid.uuid4()
+        name = request.form['first_name']
+        last_name = request.form['last_name']
+        picture = request.form['profile_pic']
+        password = request.form['password']
+        connection = connect(host=os.getenv('DB_HOST'), user=os.getenv('DB_USER'), passwd=os.getenv('DB_PASSWORD'),
+                             db=os.getenv('DB_NAME'), cursorclass=cursors.DictCursor)
+        cursor = connection.cursor()
+        cursor.execute("INSERT INTO users VALUES (%s, %s, %s, %s, %s);",(userId,name, last_name, picture, password))
+        connection.commit()
+        connection.close()
+        return 'REGISTRATION COMPLETE'
+    if request.method == 'GET':
+        return render_template('register.html')
 
 
 # Templates
